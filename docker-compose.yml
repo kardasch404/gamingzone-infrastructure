@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Databases
+  postgres-auth:
+    image: postgres:15-alpine
+    container_name: gamingzone-postgres-auth
+    environment:
+      POSTGRES_DB: ${AUTH_DB_NAME}
+      POSTGRES_USER: ${AUTH_DB_USER}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-auth-data:/var/lib/postgresql/data
+    networks:
+      - gamingzone-network
+
+  postgres-catalog:
+    image: postgres:15-alpine
+    container_name: gamingzone-postgres-catalog
+    environment:
+      POSTGRES_DB: ${CATALOG_DB_NAME}
+      POSTGRES_USER: ${CATALOG_DB_USER}
+      POSTGRES_PASSWORD: ${CATALOG_DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-catalog-data:/var/lib/postgresql/data
+    networks:
+      - gamingzone-network
+
+  postgres-inventory:
+    image: postgres:15-alpine
+    container_name: gamingzone-postgres-inventory
+    environment:
+      POSTGRES_DB: ${INVENTORY_DB_NAME}
+      POSTGRES_USER: ${INVENTORY_DB_USER}
+      POSTGRES_PASSWORD: ${INVENTORY_DB_PASSWORD}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres-inventory-data:/var/lib/postgresql/data
+    networks:
+      - gamingzone-network
+
+  postgres-order:
+    image: postgres:15-alpine
+    container_name: gamingzone-postgres-order
+    environment:
+      POSTGRES_DB: ${ORDER_DB_NAME}
+      POSTGRES_USER: ${ORDER_DB_USER}
+      POSTGRES_PASSWORD: ${ORDER_DB_PASSWORD}
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres-order-data:/var/lib/postgresql/data
+    networks:
+      - gamingzone-network
+
+volumes:
+  postgres-auth-data:
+  postgres-catalog-data:
+  postgres-inventory-data:
+  postgres-order-data:
+
+networks:
+  gamingzone-network:
+    driver: bridge
