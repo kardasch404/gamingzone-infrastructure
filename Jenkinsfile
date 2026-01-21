@@ -89,6 +89,22 @@ pipeline {
                 }
             }
         }
+        
+        stage('Deploy to Kubernetes') {
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'develop'
+                }
+            }
+            steps {
+                script {
+                    def namespace = env.BRANCH_NAME == 'main' ? 'gamingzone' : 'gamingzone-dev'
+                    def lib = load 'jenkins/pipeline-library.groovy'
+                    lib.deployToK8s(env.SERVICE_NAME, namespace, env.IMAGE_TAG)
+                }
+            }
+        }
     }
     
     post {
