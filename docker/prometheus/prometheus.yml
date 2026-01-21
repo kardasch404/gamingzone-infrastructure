@@ -1,0 +1,56 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['host.docker.internal:4000']
+
+  - job_name: 'auth-service'
+    static_configs:
+      - targets: ['host.docker.internal:4001']
+
+  - job_name: 'catalog-service'
+    static_configs:
+      - targets: ['host.docker.internal:4002']
+
+  - job_name: 'inventory-service'
+    static_configs:
+      - targets: ['host.docker.internal:4003']
+
+  - job_name: 'cart-service'
+    static_configs:
+      - targets: ['host.docker.internal:4004']
+
+  - job_name: 'order-service'
+    static_configs:
+      - targets: ['host.docker.internal:4005']
+
+  - job_name: 'payment-service'
+    static_configs:
+      - targets: ['host.docker.internal:4006']
+
+  - job_name: 'notification-service'
+    static_configs:
+      - targets: ['host.docker.internal:4007']
+
+  - job_name: 'user-profile-service'
+    static_configs:
+      - targets: ['host.docker.internal:4008']
+
+  - job_name: 'review-service'
+    static_configs:
+      - targets: ['host.docker.internal:4009']
+
+  - job_name: 'search-service'
+    static_configs:
+      - targets: ['host.docker.internal:4010']
+
+  - job_name: 'analytics-service'
+    static_configs:
+      - targets: ['host.docker.internal:4011']
