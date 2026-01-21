@@ -125,6 +125,24 @@ pipeline {
     }
     
     post {
+        success {
+            script {
+                def lib = load 'jenkins/pipeline-library.groovy'
+                lib.sendSlackNotification(
+                    'SUCCESS',
+                    "${env.SERVICE_NAME} ${env.IMAGE_TAG} deployed successfully to ${env.K8S_NAMESPACE}"
+                )
+            }
+        }
+        failure {
+            script {
+                def lib = load 'jenkins/pipeline-library.groovy'
+                lib.sendSlackNotification(
+                    'FAILURE',
+                    "${env.SERVICE_NAME} ${env.IMAGE_TAG} deployment failed. Check logs: ${env.BUILD_URL}"
+                )
+            }
+        }
         always {
             cleanWs()
         }
