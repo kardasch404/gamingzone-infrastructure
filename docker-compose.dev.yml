@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  postgres:
+    extends:
+      file: docker-compose.yml
+      service: postgres
+    environment:
+      POSTGRES_USER: gamingzone_dev
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: gamingzone_dev
+
+  redis:
+    extends:
+      file: docker-compose.yml
+      service: redis
+    command: redis-server --requirepass dev_redis
+
+  zookeeper:
+    extends:
+      file: docker-compose.yml
+      service: zookeeper
+
+  kafka:
+    extends:
+      file: docker-compose.yml
+      service: kafka
+
+  elasticsearch:
+    extends:
+      file: docker-compose.yml
+      service: elasticsearch
+
+  kibana:
+    extends:
+      file: docker-compose.yml
+      service: kibana
+
+  prometheus:
+    extends:
+      file: docker-compose.yml
+      service: prometheus
+
+  grafana:
+    extends:
+      file: docker-compose.yml
+      service: grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+
+networks:
+  gamingzone-network:
+    driver: bridge
