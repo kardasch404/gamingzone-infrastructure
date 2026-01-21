@@ -73,6 +73,22 @@ pipeline {
                 }
             }
         }
+        
+        stage('Push to Registry') {
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'develop'
+                    branch pattern: 'release/.*', comparator: 'REGEXP'
+                }
+            }
+            steps {
+                script {
+                    def lib = load 'jenkins/pipeline-library.groovy'
+                    lib.pushDockerImage(env.SERVICE_NAME, env.IMAGE_TAG)
+                }
+            }
+        }
     }
     
     post {
