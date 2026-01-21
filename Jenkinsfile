@@ -74,6 +74,23 @@ pipeline {
             }
         }
         
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def lib = load 'jenkins/pipeline-library.groovy'
+                    lib.sonarScan(env.SERVICE_NAME)
+                }
+            }
+        }
+        
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        
         stage('Push to Registry') {
             when {
                 anyOf {
